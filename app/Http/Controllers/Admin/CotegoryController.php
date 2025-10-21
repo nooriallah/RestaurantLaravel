@@ -39,7 +39,7 @@ class CotegoryController extends Controller
         $category = new Category();
         $category->name = $request->name;
         $category->description = $request->description;
-
+        
         $category_image = null;
         if ($request->hasFile("image")) {
             $image = $request->image;

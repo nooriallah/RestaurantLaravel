@@ -18,14 +18,16 @@ Route::get('/dashboard1', function () {
 // Custom route
 Route::middleware(['auth', 'admin'])->group(function () {
 
-    Route::resource('/dashboard/tables', TableController::class);
+    Route::resource('/dashboard/tables', controller: TableController::class);
 
-    Route::resource('/dashboard/categories', CotegoryController::class)->names('categories');
+    Route::resource('/dashboard/categories', controller: CotegoryController::class)->names(names: 'categories');
 
     Route::resource('/dashboard/reservations', controller: ReservationController::class);
+
     Route::resource('/dashboard/menu', controller: MenuController::class);
-    
+
 }); 
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -141,7 +141,7 @@
                 <!-- partial:partials/_sidebar.html -->
                 <nav class="sidebar sidebar-offcanvas" id="sidebar">
                     <ul class="nav">
-
+ 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('dashboard') }}">
                                 <i class="icon-grid menu-icon"></i>
@@ -156,18 +156,26 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="{{ route('categories.index') }}">
                                 <i class="icon-grid menu-icon"></i>
                                 <span class="menu-title">Categories</span>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('menu.index') }}">
-                                <i class="icon-grid menu-icon"></i>
-                                <span class="menu-title">Menu</span>
+                            <a class="nav-link" data-bs-toggle="collapse" href="#menus" aria-expanded="false"
+                                aria-controls="menus">
+                                <i class="icon-bar-graph menu-icon"></i>
+                                <span class="menu-title">Menus</span>
+                                <i class="menu-arrow"></i>
                             </a>
+                            <div class="collapse" id="menus">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="{{ route('menu.index') }}">All menu</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="{{ route('categories.index') }}">Categories</a></li>
+                                </ul>
+                            </div>
                         </li>
 
                         <li class="nav-item">

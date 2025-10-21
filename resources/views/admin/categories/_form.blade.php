@@ -27,12 +27,12 @@
                  <div class="col-md-3">
 
                      @if (isset($category) && $category->image)
-                         <img width="100 class mb-3" src="{{ asset('images/categories/' . $category->image) ?? '' }}"
+                         <img width="100" class="mb-3 d-block" src="{{ asset('images/categories/' . $category->image) ?? '' }}"
                              id="image__preview" />
                      @else
                          <img width="100 class mb-3 d-none" id="image__preview" />
                      @endif
-                     <label for="image__input" class="btn btn-sm btn-outline-dribbble">Choose image</label>
+                     <label for="image__input" class="btn btn-sm btn-outline-dribbble mt-3">Choose image</label>
                      <input type="file" name="image" accept=".png, .jpg, .jpeg"
                          class="form-control form-control-sm d-none" id="image__input" />
                      @error('image')
