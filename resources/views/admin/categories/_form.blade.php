@@ -3,7 +3,7 @@
      method="POST" enctype="multipart/form-data">
      @csrf
      @if (isset($category))
-        @method('PUT')
+         @method('PUT')
      @endif
      <div class="card col-md-12">
          <div class="card-body">
@@ -27,8 +27,8 @@
                  <div class="col-md-3">
 
                      @if (isset($category) && $category->image)
-                         <img width="100" class="mb-3 d-block" src="{{ asset('images/categories/' . $category->image) ?? '' }}"
-                             id="image__preview" />
+                         <img width="100" class="mb-3 d-block"
+                             src="{{ asset('images/categories/' . $category->image) ?? '' }}" id="image__preview" />
                      @else
                          <img width="100 class mb-3 d-none" id="image__preview" />
                      @endif
@@ -41,7 +41,13 @@
                  </div>
 
                  <div class="input-group-append">
-                     <button class="btn btn-md btn-primary ms-2" type="submit">Add +</button>
+                     <button class="btn btn-md btn-primary ms-2" type="submit">
+                         @if (isset($category))
+                             Update
+                         @else
+                             Add +
+                         @endif
+                     </button>
                  </div>
              </div>
          </div>

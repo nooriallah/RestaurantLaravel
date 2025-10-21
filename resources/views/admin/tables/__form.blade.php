@@ -29,7 +29,7 @@
                          <option value="">Select table status</option>
                          @foreach (App\Http\Enums\TableStatus::cases() as $status)
                              <option value="{{ $status->value }}" {{-- Check if current status is selected or not --}}
-                                 @if ($table->status == $status->value) selected @endif>{{ $status->name }}</option>
+                                 @if (isset($table) && $table->status == $status->value) selected @endif>{{ $status->name }}</option>
                          @endforeach
                      </select>
                      @error('status')
@@ -41,7 +41,7 @@
                      <select name="location" id="table__location" class="form-control">
                          <option value="">Select table location</option>
                          @foreach (App\Http\Enums\TableLocation::cases() as $location)
-                             <option value="{{ $location->value }}" @if ($table->location == $location->value) selected @endif>
+                             <option value="{{ $location->value }}" @if (isset($table) && $table->location == $location->value) selected @endif>
                                  {{ $location->name }}</option>
                          @endforeach
                      </select>
@@ -74,7 +74,13 @@
                  </div>
 
                  <div class="input-group-append">
-                     <button class="btn btn-md btn-primary" type="submit">Add +</button>
+                     <button class="btn btn-md btn-primary" type="submit">
+                         @if (isset($table))
+                             Update
+                         @else
+                             Add +
+                         @endif
+                     </button>
                  </div>
              </div>
          </div>

@@ -66,7 +66,13 @@
              </div>
 
              <div class="input-group-append">
-                 <button class="btn btn-md btn-primary ms-2" type="submit">Update</button>
+                 <button class="btn btn-md btn-primary ms-2" type="submit">
+                     @if (isset($menu))
+                         Update
+                     @else
+                         Add +
+                     @endif
+                 </button>
              </div>
          </div>
      </div>
