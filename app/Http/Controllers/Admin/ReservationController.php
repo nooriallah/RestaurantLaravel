@@ -35,10 +35,9 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
 
-        // I were at here
+        // dd($request->status);
         try {
 
-            // Reservation::create($request->validate());
             $request->validate([
                 "full_name" => "required",
                 "contact_number" => "required",
@@ -47,6 +46,7 @@ class ReservationController extends Controller
                 "reservation_time" => "required|date",
                 "number_of_guests" => "required|integer|min:1",
                 "table_id" => "required",
+                "status" => "required",
                 "user_id" => "required"
             ]);
 
@@ -58,11 +58,13 @@ class ReservationController extends Controller
                 "special_requests" => $request->special_requests,
                 "reservation_time" => $request->reservation_time,
                 "number_of_guests" => $request->number_of_guests,
+                "status" => $request->status,
                 "table_id" => $request->table_id,
                 "user_id" => $request->user_id
             ]);
 
             return redirect()->route("reservations.index")->with("success", "Table successfuly reserverd for $request->full_name");
+
         } catch (Exception $exp) {
             echo "Error: ";
             dd($exp);
@@ -88,7 +90,7 @@ class ReservationController extends Controller
      */
     public function update(Request $request, Reservation $reservation)
     {
-        // dd($request->all());
+        
         $request->validate([
             "full_name" => "required",
             "contact_number" => "required",
