@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Reservation;
+use App\Models\Table;
+use Exception;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -12,15 +15,18 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        return view('admin.reservations.index'); // Assuming you have a view for listing reservations
+        $reservations = Reservation::all();
+        return view('admin.reservations.index', compact('reservations'));
     }
 
-    /**
+    /** 
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        $tables = Table::all();
+        $reservations = Reservation::all();
+        return view('admin.reservations.create', compact(['tables', 'reservations']));
     }
 
     /**
@@ -28,38 +34,92 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // I were at here
+        try {
+
+            // Reservation::create($request->validate());
+            $request->validate([
+                "full_name" => "required",
+                "contact_number" => "required",
+                "email" => "nullable|email",
+                "special_requests" => "nullable",
+                "reservation_time" => "required|date",
+                "number_of_guests" => "required|integer|min:1",
+                "table_id" => "required",
+                "user_id" => "required"
+            ]);
+
+
+            Reservation::create([
+                "full_name" => $request->full_name,
+                "contact_number" => $request->contact_number,
+                "email" => $request->email,
+                "special_requests" => $request->special_requests,
+                "reservation_time" => $request->reservation_time,
+                "number_of_guests" => $request->number_of_guests,
+                "table_id" => $request->table_id,
+                "user_id" => $request->user_id
+            ]);
+
+            return redirect()->route("reservations.index")->with("success", "Table successfuly reserverd for $request->full_name");
+        } catch (Exception $exp) {
+            echo "Error: ";
+            dd($exp);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show(Reservation $reservation) {}
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Reservation $reservation)
     {
-        //
+        $tables = Table::all();
+        return view('admin.reservations.edit', compact(['tables', "reservation"]));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Reservation $reservation)
     {
-        //
+        // dd($request->all());
+        $request->validate([
+            "full_name" => "required",
+            "contact_number" => "required",
+            "email" => "nullable|email",
+            "special_requests" => "nullable",
+            "reservation_time" => "required|date",
+            "number_of_guests" => "required|integer|min:1",
+            "table_id" => "required",
+            "status" => "required"
+        ]);
+
+        $reservation->update([
+            "full_name" => $request->full_name,
+            "contact_number" => $request->contact_number,
+            "email" => $request->email,
+            "special_requests" => $request->special_requests,
+            "reservation_time" => $request->reservation_time,
+            "number_of_guests" => $request->number_of_guests,
+            "table_id" => $request->table_id,
+            "status" => $request->status
+        ]);
+
+        return redirect()->route("reservations.index")->with("success", "Reservation updated successfully.");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Reservation $reservation)
     {
-        //
+        Reservation::destroy(ids: $reservation->id);
+        return redirect()->route("reservations.index")->with("success", "Reservation deleted successfully.");
     }
 }
