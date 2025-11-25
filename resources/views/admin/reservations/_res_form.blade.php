@@ -54,7 +54,7 @@
                      <select name="table_id" id="table_id" class="form-control p-3">
                          <option value="">Select table</option>
                          @foreach ($tables as $table)
-                             <option value="{{ $table->id }}" @if (isset($reservation) && $reservation->status == $table->status)
+                             <option value="{{ $table->id }}" @if (isset($reservation) && $reservation->table_id == $table->id)
                                  selected
                              @endif>{{ $table->name }}</option>
                          @endforeach
@@ -68,10 +68,10 @@
                  <div class="col">
                      <select name="status" id="status" class="form-control p-3">
                          <option value="">Select stauts</option>
-                         @foreach (App\Http\Enums\TableStatus::cases() as $status)
-                             <option value="{{ $status->value }}" @if (isset($reservation) && $reservation && $reservation->status === $status->value)
+                         @foreach (App\Http\Enums\TableStatus::cases() as $case)
+                             <option value="{{ $case->value }}" @if (isset($reservation) && $reservation->status == $case->value)
                                  selected
-                             @endif>{{ $status->name }}</option>
+                             @endif>{{ $case->name }}</option>
                          @endforeach
                      </select>
                      @error('status')
@@ -91,7 +91,7 @@
                  <div class="col">
                      <input type="datetime-local" name="reservation_time" id="curDate"
                          class="form-control form-control-sm" placeholder="Reservation time"
-                         value="{{ $reservation->reservation_time ?? '' }}" required>
+                         value="{{ $reservation->reservation_time ?? '' }}" required >
                      @error('reservation_time')
                          <span class="text-danger">{{ $message }}</span>
                      @enderror
@@ -114,6 +114,7 @@
 
  @if (empty($reservation))
      <script>
+        /*
          let now = new Date();
          let year = now.getFullYear();
          let month = (now.getMonth() + 1).toString().padStart(2, '0');
@@ -122,5 +123,6 @@
          let minutes = now.getMinutes().toString().padStart(2, '0');
          let localDatetime = `${year}-${month}-${day}T${hours}:${minutes}`;
          document.getElementById('curDate').value = localDatetime;
+         */
      </script>
  @endif

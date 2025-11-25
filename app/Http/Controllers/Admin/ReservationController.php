@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Reservation;
 use App\Models\Table;
+use App\Rules\DateBetween;
+use App\Rules\TimeBetween;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -37,19 +39,17 @@ class ReservationController extends Controller
 
         // dd($request->status);
         try {
-
             $request->validate([
                 "full_name" => "required",
                 "contact_number" => "required",
                 "email" => "nullable|email",
                 "special_requests" => "nullable",
-                "reservation_time" => "required|date",
+                "reservation_time" => ["required", new TimeBetween()],
                 "number_of_guests" => "required|integer|min:1",
                 "table_id" => "required",
                 "status" => "required",
                 "user_id" => "required"
             ]);
-
 
             Reservation::create([
                 "full_name" => $request->full_name,
@@ -64,10 +64,8 @@ class ReservationController extends Controller
             ]);
 
             return redirect()->route("reservations.index")->with("success", "Table successfuly reserverd for $request->full_name");
-
         } catch (Exception $exp) {
-            echo "Error: ";
-            dd($exp);
+            dd("Error: " . $exp);
         }
     }
 
@@ -82,6 +80,8 @@ class ReservationController extends Controller
     public function edit(Reservation $reservation)
     {
         $tables = Table::all();
+
+       
         return view('admin.reservations.edit', compact(['tables', "reservation"]));
     }
 
@@ -90,13 +90,12 @@ class ReservationController extends Controller
      */
     public function update(Request $request, Reservation $reservation)
     {
-        
         $request->validate([
             "full_name" => "required",
             "contact_number" => "required",
             "email" => "nullable|email",
             "special_requests" => "nullable",
-            "reservation_time" => "required|date",
+            "reservation_time" => ["required", new TimeBetween()],
             "number_of_guests" => "required|integer|min:1",
             "table_id" => "required",
             "status" => "required"
