@@ -16,16 +16,14 @@ class DateBetween implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        // Check the user only can select date in one week not more
-       $selectDate = Carbon::parse($value);
-       $today = Carbon::today();
+       
+       // Normalize to DATE ONLY
+        $selectedDate = Carbon::parse($value)->startOfDay();
+        $today = Carbon::today();
+        $maxDate = Carbon::today()->addWeek()->startOfDay();
 
-       if($selectDate->isBefore($today) || $selectDate->gt($today->addWeek())) {
-            $fail("The selected date must be within one week from today");
-       }
-
-
-
-
+        if ($selectedDate->lt($today) || $selectedDate->gt($maxDate)) {
+            $fail("The selected date must be within one week from today.");
+        } 
     }
 }

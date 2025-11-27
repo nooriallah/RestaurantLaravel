@@ -9,6 +9,7 @@
              <div class="input-group flex-column gap-2">
 
                  <div class="col-md-3">
+                    <label for="name">Name <span class="text-danger">*</span> </label>
                      <input type="text" name="name" class="form-control form-control-sm" placeholder="Table name"
                          value="{{ $table->name ?? '' }}" required>
                      @error('name')
@@ -17,6 +18,7 @@
                  </div>
 
                  <div class="col-md-3">
+                    <label for="capacity">Capacity <span class="text-danger">*</span></label>
                      <input type="number" name="capacity" class="form-control form-control-sm"
                          placeholder="Quest quantity" value="{{ $table->capacity ?? '' }}" required>
                      @error('capacity')
@@ -25,11 +27,12 @@
                  </div>
 
                  <div class="col-md-3">
+                    <label for="table_status">Status <span class="text-danger">*</span></label>
                      <select name="status" id="table__status" class="form-control">
                          <option value="">Select table status</option>
                          @foreach (App\Http\Enums\TableStatus::cases() as $status)
                              <option value="{{ $status->value }}" {{-- Check if current status is selected or not --}}
-                                 @if (isset($table) && $table->status == $status->value) selected @endif>{{ $status->name }}</option>
+                                 @if (isset($table) && $table->status->value == $status->value) selected @endif>{{ $status->name }}</option>
                          @endforeach
                      </select>
                      @error('status')
@@ -38,10 +41,11 @@
                  </div>
 
                  <div class="col-md-3">
+                    <label for="table_location">Location <span class="text-danger">*</span></label>
                      <select name="location" id="table__location" class="form-control">
                          <option value="">Select table location</option>
                          @foreach (App\Http\Enums\TableLocation::cases() as $location)
-                             <option value="{{ $location->value }}" @if (isset($table) && $table->location == $location->value) selected @endif>
+                             <option value="{{ $location->value }}" @if (isset($table) && $table->location->value == $location->value) selected @endif>
                                  {{ $location->name }}</option>
                          @endforeach
                      </select>
@@ -51,6 +55,7 @@
                  </div>
 
                  <div class="col-md-5">
+                    <label for="description">Description (optional)</label>
                      <textarea type="text" name="description" class="form-control form-control-sm" placeholder="Description"
                          rows="8">{{ $table->description ?? '' }}</textarea>
                      @error('description')
@@ -59,6 +64,7 @@
                  </div>
 
                  <div class="col-md-3">
+                    <label for="image">Table image (optional)</label>
                      @if (isset($table) && $table->image)
                          <img width="100" class="mb-3 d-block"
                              src="{{ asset('images/table/' . $table->image) ?? '' }}" id="image__preview" />

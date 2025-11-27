@@ -51,7 +51,6 @@
                                         <th>Email</th>
                                         <th>Time</th>
                                         <th>Table</th>
-                                        <th>Status</th>
                                         <th>Guest number</th>
                                         <th>Descripton</th>
                                         <th>Actions</th>
@@ -72,16 +71,7 @@
                                             <td>{{ $reservation->email }}</td>
                                             <td>{{ $reservation->reservation_time }}</td>
                                             <td>{{ $reservation->table->name }}</td>
-                                            <td>
-                                                <label
-                                                    class="badge 
-                                                @if ($reservation->status == 'available') badge-success
-                                                    @elseif ($reservation->status == 'reserved')
-                                                        badge-danger
-                                                    @else
-                                                badge-warning @endif">
-                                                    {{ $reservation->status }}</label>
-                                            </td>
+                                            
                                             <td>{{ $reservation->number_of_guests }}</td>
                                             <td>{{ $reservation->special_requests }}</td>
 
@@ -92,8 +82,8 @@
 
                                                 <form id="delete-form-{{ $reservation->id }}"
                                                     name="delete-form-{{ $reservation->id }}"
-                                                    action="{{ route('reservations.destroy', $reservation) }}" method="POST"
-                                                    class="d-inline">
+                                                    action="{{ route('reservations.destroy', $reservation) }}"
+                                                    method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-sm btn-danger show_confirm"

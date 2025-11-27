@@ -14,7 +14,8 @@ class TableController extends Controller
     public function index()
     {
         $tables = Table::all();
-        return view('admin.tables.index', compact('tables')); // Assuming you have a view for listing tables
+         
+        return view('admin.tables.index', compact('tables')); 
     }
 
     /**
@@ -22,7 +23,7 @@ class TableController extends Controller
      */
     public function create()
     {
-        return view('admin.tables.create'); // Assuming you have a view for creating a table
+        return view('admin.tables.create'); 
     }
 
     /**
@@ -76,6 +77,7 @@ class TableController extends Controller
      */
     public function edit(Table $table)
     {
+        
         return view('admin.tables.edit', compact('table')); // Assuming you have a view for editing a table
     }
 

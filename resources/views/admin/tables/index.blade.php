@@ -60,27 +60,22 @@
                                         $counter = 0;
                                     @endphp
                                     @foreach ($tables as $table)
-                                    @php
-                                        $counter += 1;
-                                    @endphp
+                                        @php
+                                            $counter += 1;
+                                        @endphp
                                         <tr>
                                             <td>{{ $counter }}</td>
                                             <td>{{ $table->name }}</td>
                                             <td>{{ $table->capacity }}</td>
                                             <td>
                                                 <label
-                                                    class="badge 
-                                                @if ($table->status == 'available') badge-success
-                                                    @elseif ($table->status == 'reserved')
-                                                        badge-danger
-                                                    @else
-                                                badge-warning @endif">
-                                                    {{ $table->status }}</label>
+                                                    class="@if ($table->status->value == 'available') badge badge-success @elseif ($table->status->value == 'reserved') badge badge-danger @else badge badge-warning @endif">
+                                                    {{ $table->status->value }}</label>
                                             </td>
 
                                             <td>{{ $table->location }}</td>
                                             <td>
-                                                <img src="{{ asset('images/table/' . $table->image) }}"
+                                                <img src='{{ asset("images/table/{$table->image}") }}'
                                                     alt="{{ $table->name }}">
                                             </td>
 
